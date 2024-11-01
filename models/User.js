@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const bcrypt = require("bcryptjs");
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true, lowercase: true },
@@ -17,6 +17,18 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
   active: { type: Boolean, default: true, select: false },
+});
+
+userSchema.pre("save", async function (next) {
+  // only run this function if password was actually changed
+  if (!this.isModified("password")) return next();
+
+  // hash the password
+  this.password = await bcrypt.hash(this.password, 12);
+
+  // delete passwordConfirm field to avoid saving it in the database
+  this.passwordConfirm = undefined;
+  next();
 });
 
 const User = mongoose.model("User", userSchema);
