@@ -1,7 +1,7 @@
 [
   {
     "_id": "5c8a1402f8fb814b66fa341",
-    "appointment_id": "5c8a12342f4fb124b44fa651",
+    "appointment": "5c8a12342f4fb124b44fa651",
     "description": "Washing machine not spinning",
     "issues_found": ["Clogged drain filter", "Worn drive belt"],
     "budget_estimate": 150.0,
@@ -10,7 +10,7 @@
   },
   {
     "_id": "5c8a11562f6fb543b32fa199",
-    "appointment_id": "5c8a14662f6fb523b32fa399",
+    "appointment": "5c8a14662f6fb523b32fa399",
     "description": "Refrigerator not cooling",
     "issues_found": ["Faulty compressor", "Dirty condenser coils"],
     "budget_estimate": 200.0,
