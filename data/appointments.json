@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "5c8a12342f4fb124b44fa651",
+    "user": "5c8a1dfa2f8fb814b56fa181",
+    "status": "pending",
+    "scheduled_time": "2024-11-05T10:00:00",
+    "address": {
+      "street": "123 Main St",
+      "city": "Springfield",
+      "state": "IL",
+      "zip_code": "62701"
+    }
+  },
+  {
+    "_id": "5c8a14662f6fb523b32fa399",
+    "user": "5c8a1e1a2f8fb814b56fa182",
+    "status": "pending",
+    "scheduled_time": "2024-11-06T14:00:00",
+    "address": {
+      "street": "456 Elm St",
+      "city": "Springfield",
+      "state": "IL",
+      "zip_code": "62702"
+    }
+  }
+]
