@@ -1,3 +1,4 @@
+const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
@@ -115,4 +116,19 @@ exports.protect = async (req, res, next) => {
   // Grant access to protected route
   req.user = freshUser;
   next();
+};
+
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    // roles ['admin', 'user']. role='user'
+    if (!roles.includes(req.user.role)) {
+      res.status(403).json({
+        status: "error",
+        message: "You do not have permission to perform this action",
+      });
+      return next();
+    }
+
+    next();
+  };
 };
