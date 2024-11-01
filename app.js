@@ -3,6 +3,9 @@ const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 
+// Middlewares
+app.use(express.json());
+
 // Routes
 app.get("/api/", (req, res) => {
   res.json({
