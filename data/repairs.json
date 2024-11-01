@@ -1,0 +1,18 @@
+[
+  {
+    "appointment_id": 1,
+    "description": "Washing machine not spinning",
+    "issues_found": ["Clogged drain filter", "Worn drive belt"],
+    "budget_estimate": 150.0,
+    "authorization_status": "pending",
+    "client_authorized": false
+  },
+  {
+    "appointment_id": 2,
+    "description": "Refrigerator not cooling",
+    "issues_found": ["Faulty compressor", "Dirty condenser coils"],
+    "budget_estimate": 200.0,
+    "authorization_status": "pending",
+    "client_authorized": false
+  }
+]
