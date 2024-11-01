@@ -49,21 +49,19 @@ exports.login = async (req, res, next) => {
 
   // check if email and password exists
   if (!email || !password) {
-    res.status(400).json({
+    return res.status(400).json({
       status: "error",
       message: "Please provide a valid email and password",
     });
-    return next();
   }
   // check if user exists && password is correct
   const user = await User.findOne({ email }).select("+password");
 
   if (!user || !(await user.correctPassword(password, user.password))) {
-    res.status(401).json({
+    return res.status(401).json({
       status: "error",
       message: "Incorrect email or password",
     });
-    return next();
   }
   // if all ok, send token to client
   const token = signToken(user._id);
@@ -84,11 +82,10 @@ exports.protect = async (req, res, next) => {
   }
 
   if (!token) {
-    res.status(401).json({
+    return res.status(401).json({
       status: "error",
       message: "You are not logged in, please login",
     });
-    return next();
   }
 
   // verification token
@@ -97,20 +94,18 @@ exports.protect = async (req, res, next) => {
   // check if user still exists
   const freshUser = await User.findById(decoded.id);
   if (!freshUser) {
-    res.status(401).json({
+    return res.status(401).json({
       status: "error",
       message: "User no longer exists",
     });
-    return next();
   }
 
   // check if user changed password after the token was issued
   if (freshUser.changedPasswordAfter(decoded.iat)) {
-    res.status(401).json({
+    return res.status(401).json({
       status: "error",
       message: "User recently changed password, please log in again",
     });
-    return next();
   }
 
   // Grant access to protected route
@@ -122,11 +117,10 @@ exports.restrictTo = (...roles) => {
   return (req, res, next) => {
     // roles ['admin', 'user']. role='user'
     if (!roles.includes(req.user.role)) {
-      res.status(403).json({
+      return res.status(403).json({
         status: "error",
         message: "You do not have permission to perform this action",
       });
-      return next();
     }
 
     next();
