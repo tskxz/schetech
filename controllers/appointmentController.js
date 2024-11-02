@@ -82,9 +82,36 @@ const updateAppointment = async function (req, res) {
     return;
   }
 };
+
+const deleteAppointment = async function (req, res) {
+  try {
+    const deletedAppointment = await Appointment.findByIdAndDelete(
+      req.params.id
+    );
+    if (!deletedAppointment) {
+      return res.status(404).json({
+        status: "error",
+        message: "Appointment not found",
+      });
+    } else {
+      res.status(204).json({
+        status: "success",
+        message: "Appointment deleted successfully",
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      message: err,
+    });
+    return;
+  }
+};
 module.exports = {
   getAllAppointments,
   setAppointmentUserIds,
   createAppointment,
   updateAppointment,
+  deleteAppointment,
 };

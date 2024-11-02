@@ -24,6 +24,7 @@ router
     authController.protect,
     authController.restrictTo("admin"),
     appointmentController.updateAppointment
-  );
+  )
+  .delete(authController.protect, appointmentController.deleteAppointment);
 
 module.exports = router;
