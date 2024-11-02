@@ -85,6 +85,18 @@ const updateAppointment = async function (req, res) {
 
 const deleteAppointment = async function (req, res) {
   try {
+    const appointment = await Appointment.findById(req.params.id);
+
+    if (
+      req.user.role !== "admin" &&
+      appointment.user.toString() !== req.user._id.toString()
+    ) {
+      return res.status(403).json({
+        status: "error",
+        message: "You do not have permission to delete this appointment",
+      });
+    }
+
     const deletedAppointment = await Appointment.findByIdAndDelete(
       req.params.id
     );
@@ -108,6 +120,7 @@ const deleteAppointment = async function (req, res) {
     return;
   }
 };
+
 module.exports = {
   getAllAppointments,
   setAppointmentUserIds,
