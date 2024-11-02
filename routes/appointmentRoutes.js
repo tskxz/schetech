@@ -18,4 +18,12 @@ router
     appointmentController.createAppointment
   );
 
+router
+  .route("/:id")
+  .post(
+    authController.protect,
+    authController.restrictTo("admin"),
+    appointmentController.updateAppointment
+  );
+
 module.exports = router;
