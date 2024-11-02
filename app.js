@@ -1,6 +1,6 @@
 const express = require("express");
 const userRoutes = require("./routes/userRoutes");
-
+const appointmentRoutes = require("./routes/appointmentRoutes");
 const app = express();
 
 // Middlewares
@@ -14,5 +14,6 @@ app.get("/api/", (req, res) => {
 });
 
 app.use("/api/users", userRoutes);
+app.use("/api/appointments", appointmentRoutes);
 
 module.exports = app;
