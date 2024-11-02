@@ -20,7 +20,7 @@ router
 
 router
   .route("/:id")
-  .post(
+  .patch(
     authController.protect,
     authController.restrictTo("admin"),
     appointmentController.updateAppointment
