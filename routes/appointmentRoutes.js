@@ -11,6 +11,11 @@ router
     authController.protect,
     authController.restrictTo("admin"),
     appointmentController.getAllAppointments
+  )
+  .post(
+    authController.protect,
+    appointmentController.setAppointmentUserIds,
+    appointmentController.createAppointment
   );
 
 module.exports = router;
