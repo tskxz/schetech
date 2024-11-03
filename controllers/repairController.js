@@ -18,4 +18,28 @@ const getAllRepairs = async function (req, res) {
   }
 };
 
-module.exports = { getAllRepairs };
+const createRepair = async function (req, res) {
+  try {
+    const { appointment, description, issues_found, budget_estimate } =
+      req.body;
+    const newRepair = await Repair.create({
+      appointment,
+      description,
+      issues_found,
+      budget_estimate,
+    });
+    res.status(201).json({
+      status: "success",
+      data: { repair: newRepair },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      message: err,
+    });
+    return;
+  }
+};
+
+module.exports = { getAllRepairs, createRepair };

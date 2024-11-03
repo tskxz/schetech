@@ -10,6 +10,11 @@ router
     authController.protect,
     authController.restrictTo("admin"),
     repairController.getAllRepairs
+  )
+  .post(
+    authController.protect,
+    authController.restrictTo("admin"),
+    repairController.createRepair
   );
 
 module.exports = router;
