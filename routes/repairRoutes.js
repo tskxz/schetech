@@ -9,13 +9,25 @@ router
   .get(
     authController.protect,
     authController.restrictTo("admin"),
-    repairController.getAllRepairs
+    repairController.getAllRepairs,
   )
   .post(
     authController.protect,
     authController.restrictTo("admin"),
-    repairController.createRepair
+    repairController.createRepair,
   );
 
-router.route("/:id").patch(authController.protect, authController.restrictTo("admin"), repairController.updateRepair).delete(authController.protect, authController.restrictTo("admin"), repairController.deleteRepair);
+router
+  .route("/:id")
+  .patch(
+    authController.protect,
+    authController.restrictTo("admin"),
+    repairController.updateRepair,
+  )
+  .delete(
+    authController.protect,
+    authController.restrictTo("admin"),
+    repairController.deleteRepair,
+  )
+  .get(authController.protect, repairController.getRepair);
 module.exports = router;
