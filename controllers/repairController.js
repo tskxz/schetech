@@ -73,4 +73,28 @@ const updateRepair = async function (req, res) {
 	}
 }
 
-module.exports = { getAllRepairs, createRepair, updateRepair };
+const deleteRepair = async function (req, res){
+	try {
+		const deletedRepair = await Repair.findByIdAndDelete(req.params.id);
+		if(!deletedRepair){
+			return res.status(404).json({
+				status: "error",
+				message: "Repair not found",
+			});
+		} else {
+			res.status(204).json({
+				status: "success",
+				message: "Repair deleted successfully",
+			});
+		}
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			status: "error",
+			message: err,
+		});
+		return;
+	}
+}
+
+module.exports = { getAllRepairs, createRepair, updateRepair, deleteRepair };
