@@ -26,6 +26,40 @@ const getAllAppointments = async function (req, res) {
   }
 };
 
+const getAppointment = async function (req, res) {
+  try {
+    const appointment = await Appointment.findById(req.params.id);
+    if (!appointment) {
+      return res.status(404).json({
+        status: "error",
+        message: "Appointment not found",
+      });
+    }
+
+    if (
+      req.user.role !== "admin" &&
+      appointment.user.toString() !== req.user._id.toString()
+    ) {
+      return res.status(403).json({
+        status: "error",
+        message: "You do not have permission to see this appointment",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        appointment,
+      },
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: "error",
+      message: err,
+    });
+  }
+};
+
 const createAppointment = async function (req, res) {
   try {
     const { user, status, scheduled_time, address } = req.body;
@@ -59,7 +93,7 @@ const updateAppointment = async function (req, res) {
       {
         new: true,
         runValidators: true,
-      }
+      },
     );
     if (!updatedAppointment) {
       return res.status(404).json({
@@ -98,7 +132,7 @@ const deleteAppointment = async function (req, res) {
     }
 
     const deletedAppointment = await Appointment.findByIdAndDelete(
-      req.params.id
+      req.params.id,
     );
     if (!deletedAppointment) {
       return res.status(404).json({
@@ -123,6 +157,7 @@ const deleteAppointment = async function (req, res) {
 
 module.exports = {
   getAllAppointments,
+  getAppointment,
   setAppointmentUserIds,
   createAppointment,
   updateAppointment,
