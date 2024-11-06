@@ -42,4 +42,35 @@ const createRepair = async function (req, res) {
   }
 };
 
-module.exports = { getAllRepairs, createRepair };
+const updateRepair = async function (req, res) {
+	try {
+		const updatedRepair = await Repair.findByIdAndUpdate(
+			req.params.id,
+			req.body, {
+				new: true,
+				runValidators: true
+			}
+		);
+		if(!updatedRepair){
+			return res.status(404).json({
+				status: "error",
+				message: "Repair not found",
+			});
+		}
+		res.status(200).json({
+			status: "success",
+			data: {
+				repair: updatedRepair,
+			},
+		});
+	} catch (err) {
+		console.log(err)
+		res.status(500).json({
+			status: "error",
+			message: err,
+		});
+		return;
+	}
+}
+
+module.exports = { getAllRepairs, createRepair, updateRepair };

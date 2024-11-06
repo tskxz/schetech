@@ -17,4 +17,5 @@ router
     repairController.createRepair
   );
 
+router.route("/:id").patch(authController.protect, authController.restrictTo("admin"), repairController.updateRepair);
 module.exports = router;
