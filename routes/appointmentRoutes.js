@@ -10,20 +10,21 @@ router
   .get(
     authController.protect,
     authController.restrictTo("admin"),
-    appointmentController.getAllAppointments
+    appointmentController.getAllAppointments,
   )
   .post(
     authController.protect,
     appointmentController.setAppointmentUserIds,
-    appointmentController.createAppointment
+    appointmentController.createAppointment,
   );
 
 router
   .route("/:id")
+  .get(authController.protect, appointmentController.getAppointment)
   .patch(
     authController.protect,
     authController.restrictTo("admin"),
-    appointmentController.updateAppointment
+    appointmentController.updateAppointment,
   )
   .delete(authController.protect, appointmentController.deleteAppointment);
 
